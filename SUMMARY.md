@@ -6,5 +6,6 @@
 * [工厂模式](factory-pattern.md)
 * [适配器模式](adapter-pattern.md)
 * [外观模式](facade-pattern.md)
+* [组合模式](composite-pattern.md)
 * [享元模式](flyweight-pattern.md)
 * [附录](APPENDIX.md)
