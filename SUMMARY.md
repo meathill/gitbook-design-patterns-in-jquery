@@ -8,4 +8,5 @@
 * [外观模式](facade-pattern.md)
 * [组合模式](composite-pattern.md)
 * [享元模式](flyweight-pattern.md)
+* [总结](end.md)
 * [附录](APPENDIX.md)
