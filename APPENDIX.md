@@ -38,3 +38,6 @@ jQuery
 --------
 
 1. [官方网站](https://jquery.com/)
+2. [插件网站](https://plugins.jquery.com/)
+3. [教学网站](https://learn.jquery.com/)
+4. [jQuery 源码](https://github.com/jquery)

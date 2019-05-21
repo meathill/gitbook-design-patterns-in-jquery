@@ -1,0 +1,25 @@
+{
+  "name": "gitchat-design-patterns-in-jquery",
+  "version": "1.0.0",
+  "description": "从 jQuery 里学习设计模式 ========",
+  "main": "concat.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node concat.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meathill/gitchat-design-patterns-in-jquery.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meathill/gitchat-design-patterns-in-jquery/issues"
+  },
+  "homepage": "https://github.com/meathill/gitchat-design-patterns-in-jquery#readme",
+  "devDependencies": {
+    "marked": "^0.6.2"
+  },
+  "dependencies": {}
+}

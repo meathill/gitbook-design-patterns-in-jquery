@@ -5,7 +5,7 @@
 
 > 在 jQuery 里也不胜枚举，比如 DOM 操作、比如 `$.getJSON()`，以及最出彩的——选择器。
 
-我觉得，设计和实现 DOM API 的人很可能不写前端程序……美丑不论，早期的 DOM API 真的很难用，比如 `getElementById()`，意思倒是明确，但是拉拉撒撒写很长，能做的事情却很少。`getElementsByClassName()` 和 `getElementsByTagName()` 也差不多，而且，因为存在单复数的问题，在早期孱弱的编辑器里（早年甚至很多人用 Windows 自带的 notepad 写代码），更是时不时就搞出些问题让人头痛。
+我觉得，设计和实现 DOM API 的人很可能不写前端程序……美丑不论，早期的 DOM API 真的很难用，比如 `getElementById()`，意思倒是明确，但是拉拉撒撒写很长，能做的事情却很少。`getElementsByClassName()` 和 `getElementsByTagName()` 也差不多，而且，因为存在单复数的问题，在早期孱弱的编辑器里（早年甚至很多人用 Windows 自带的 记事本（Notepad）写代码），更是时不时就搞出些问题让人头痛。
 
 如果只有一层选择器的话，其实还好，复合选择器会更难处理，比如 `#modal .model-footer button:first-child`。
 
