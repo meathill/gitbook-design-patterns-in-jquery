@@ -33,93 +33,82 @@ jQuery 实现
 
 每个 jQuery 实例都是组合模式对象，所以我们只需要在 `core` 中找一下，很快就能找到对应的实现。
 
-以下代码来自于 [438b1a3](https://github.com/jquery/jquery/blob/master/src/core.js#L39-L118)，我摘抄了和组合模式相关的部分：
+以下代码来自于 [438b1a3](https://github.com/jquery/jquery/blob/master/src/core.js#L39-L118)，我摘抄了和组合模式相关的部分，它们基本上就是一些常规的维护集合的函数：
 
 ```js
 jQuery.fn = jQuery.prototype = {
 	constructor: jQuery,
 
-	// The default length of a jQuery object is 0
+	// 组合长度
 	length: 0,
 
+	// 转换成数组
 	toArray: function() {
 		return slice.call( this );
 	},
 
-	// Get the Nth element in the matched element set OR
-	// Get the whole matched element set as a clean array
+	// 取出第 `num` 个元素
 	get: function( num ) {
-
-		// Return all the elements in a clean array
-		if ( num == null ) {
-			return slice.call( this );
-		}
-
-		// Return just the one element from the set
-		return num < 0 ? this[ num + this.length ] : this[ num ];
+		// ....
 	},
 
-	// Take an array of elements and push it onto the stack
-	// (returning the new matched element set)
+	// 取一些元素放入栈中并返回
 	pushStack: function( elems ) {
-
-		// Build a new jQuery matched element set
-		var ret = jQuery.merge( this.constructor(), elems );
-
-		// Add the old object onto the stack (as a reference)
-		ret.prevObject = this;
-
-		// Return the newly-formed element set
-		return ret;
+		// ....
 	},
 
-	// Execute a callback for every element in the matched set.
+	// 对本组合中所有元素执行特定 callback
 	each: function( callback ) {
 		return jQuery.each( this, callback );
 	},
 
+	// 对本组和中所有元素执行 callback，生成新的组合
 	map: function( callback ) {
 		return this.pushStack( jQuery.map( this, function( elem, i ) {
 			return callback.call( elem, i, elem );
 		} ) );
 	},
 
+	// 截取若干元素
 	slice: function() {
 		return this.pushStack( slice.apply( this, arguments ) );
 	},
 
+	// 取第一个元素
 	first: function() {
 		return this.eq( 0 );
 	},
 
+	// 取最后一个元素
 	last: function() {
 		return this.eq( -1 );
 	},
 
+	// 取第 N 个元素
 	eq: function( i ) {
 		var len = this.length,
 			j = +i + ( i < 0 ? len : 0 );
 		return this.pushStack( j >= 0 && j < len ? [ this[ j ] ] : [] );
 	},
 
+	// 取出栈里面的元素
 	end: function() {
 		return this.prevObject || this.constructor();
 	},
 
-	// For internal use only.
-	// Behaves like an Array's method, not like a jQuery method.
+	// 内部使用的函数
 	push: push,
 	sort: arr.sort,
 	splice: arr.splice
 };
 ```
 
-元素操作类方法，会在具体的文件逐个赋给 jQuery.prototype，比如，CSS 操作就在 [`css.js`](https://github.com/jquery/jquery/blob/master/src/css.js) 里，大家可以自己慢慢看，因为并不涉及到模式本身，就不详细介绍了。
+操作元素的方法，会在具体的文件逐个赋给 jQuery.prototype，比如，CSS 操作就在 [`css.js`](https://github.com/jquery/jquery/blob/master/src/css.js) 里，大家可以自己慢慢看，因为并不涉及到组合模式，就不详细介绍了。
 
 JavaScript 和经典模式的区别
 --------
 
-JS 里，我们不需要特意实现某种数据结构，Object 本身就可以存放任意类型的数据。所以我们可以像 jQuery 一样，在对象里实现“组合”操作的方法即可。
+JS 里，我们不需要特意实现某种数据结构，Object 本身就可以存放任意类型的数据，并且数值本身也是合法的 `key`。所以我们可以像 jQuery 一样，在对象里实现操作“组合”的方法即可。
 
 JS 使用原型链实现类的继承，所以我们只要实现一个 `Array-like` 的对象，然后把类的原型指向它即可。比普通面向对象语言要容易一些。
 

@@ -33,7 +33,7 @@ jQuery 实现
 外观模式主要是一种设计思路，在结构上并没有非常明显的特征。这里就拿 jQuery 里 jsonp 的实现当作例子，看看它是怎么封装这个功能的吧：
 
 ```js
-// Default jsonp settings
+// 在这一步，为了能够适用 jsonp，所以对 ajax 请求进行了一些封装
 jQuery.ajaxSetup( {
 	jsonp: "callback",
 	jsonpCallback: function() {
@@ -43,7 +43,7 @@ jQuery.ajaxSetup( {
 	}
 } );
 
-// Detect, normalize options and install callbacks for jsonp requests
+// 检查是否符合 jsonp 请求的特征，如果是的话，就增加 callback
 jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 
 	var callbackName, overwritten, responseContainer,
@@ -55,73 +55,42 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 				rjsonp.test( s.data ) && "data"
 		);
 
-	// Handle iff the expected data type is "jsonp" or we have a parameter to set
+	// 检查是否使用函数处理回调，是否要传入其它参数值
 	if ( jsonProp || s.dataTypes[ 0 ] === "jsonp" ) {
 
-		// Get callback name, remembering preexisting value associated with it
+		// 获取回调函数的名称，获取需要传入的其它参数
 		callbackName = s.jsonpCallback = jQuery.isFunction( s.jsonpCallback ) ?
 			s.jsonpCallback() :
 			s.jsonpCallback;
 
-		// Insert callback into url or form data
+		// 把回调函数放入 URL
 		if ( jsonProp ) {
 			s[ jsonProp ] = s[ jsonProp ].replace( rjsonp, "$1" + callbackName );
 		} else if ( s.jsonp !== false ) {
 			s.url += ( rquery.test( s.url ) ? "&" : "?" ) + s.jsonp + "=" + callbackName;
 		}
 
-		// Use data converter to retrieve json after script execution
-		s.converters[ "script json" ] = function() {
-			if ( !responseContainer ) {
-				jQuery.error( callbackName + " was not called" );
-			}
-			return responseContainer[ 0 ];
-		};
+		// ....
 
-		// force json dataType
-		s.dataTypes[ 0 ] = "json";
-
-		// Install callback
+		// 将回调函数放入全局上下文
 		overwritten = window[ callbackName ];
 		window[ callbackName ] = function() {
 			responseContainer = arguments;
 		};
 
-		// Clean-up function (fires after converters)
-		jqXHR.always( function() {
+		// ....
 
-			// If previous value didn't exist - remove it
-			if ( overwritten === undefined ) {
-				jQuery( window ).removeProp( callbackName );
-
-			// Otherwise restore preexisting value
-			} else {
-				window[ callbackName ] = overwritten;
-			}
-
-			// Save back as free
-			if ( s[ callbackName ] ) {
-
-				// make sure that re-using the options doesn't screw things around
-				s.jsonpCallback = originalSettings.jsonpCallback;
-
-				// save the callback name for future use
-				oldCallbacks.push( callbackName );
-			}
-
-			// Call if it was a function and we have a response
-			if ( responseContainer && jQuery.isFunction( overwritten ) ) {
-				overwritten( responseContainer[ 0 ] );
-			}
-
-			responseContainer = overwritten = undefined;
-		} );
-
-		// Delegate to script
+		// 将请求类型改为 script，因为 JSONP 请求得到的都是 script
 		return "script";
 	}
 } );
 ```
+
+简单补充下 JSONP 的知识。早年不存在跨域策略，所以浏览器跨域是严格禁止访问的。可是稍微大点的公司多半都有多个服务多个域名，那怎么才能跨域使用这些服务呢？一方面，可以用一台服务器作为代理，但是这样又会引发别的问题；另一种方案，就是 JSONP。
+
+我们知道，通过 `<script>` 标签引入的 JS 是没有跨域问题的，那么，假如这个 `<script>` 标签的 `src` 指向一个动态生成的 JS，这个 JS 里是一个函数调用，原本需要远程加载的数据，通过参数传进去，跨域的问题不就解决了么？
+
+JSONP 就是这样的方案，它的兼容性非常好。唯一的实施难点，就在于远程加载的 JS 运行在全局上下文，所以我们经常需要想办法暴露一个命令到 `window`，jQuery 实际上就帮我们完成这个工作。
 
 JavaScript 和经典模式的区别
 --------
