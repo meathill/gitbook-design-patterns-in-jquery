@@ -1,0 +1,388 @@
+
+<!DOCTYPE HTML>
+<html lang="zh" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>享元模式 · 从 jQuery 中学习设计模式</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="end.html" />
+    
+    
+    <link rel="prev" href="composite-pattern.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="輸入並搜尋" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="oop-design-pattern.html">
+            
+                <a href="oop-design-pattern.html">
+            
+                    
+                    设计模式与面向对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="factory-pattern.html">
+            
+                <a href="factory-pattern.html">
+            
+                    
+                    工厂模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="adapter-pattern.html">
+            
+                <a href="adapter-pattern.html">
+            
+                    
+                    适配器模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="facade-pattern.html">
+            
+                <a href="facade-pattern.html">
+            
+                    
+                    外观模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="composite-pattern.html">
+            
+                <a href="composite-pattern.html">
+            
+                    
+                    组合模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7" data-path="flyweight-pattern.html">
+            
+                <a href="flyweight-pattern.html">
+            
+                    
+                    享元模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="end.html">
+            
+                <a href="end.html">
+            
+                    
+                    总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="APPENDIX.html">
+            
+                <a href="APPENDIX.html">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本書使用 GitBook 釋出
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >享元模式</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x4EAB;&#x5143;&#x6A21;&#x5F0F;">&#x4EAB;&#x5143;&#x6A21;&#x5F0F;</h1>
+<blockquote>
+<p>Flyweight Pattern&#xFF0C;&#x4EAB;&#x5143;&#x6A21;&#x5F0F;&#xFF0C;&#x5C5E;&#x4E8E;&#x7ED3;&#x6784;&#x578B;&#x6A21;&#x5F0F;&#x3002;</p>
+<p>&#x56E0;&#x4E3A; jQuery &#x4F7F;&#x7528;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x4F5C;&#x4E3A;&#x5176; API &#x7684;&#x57FA;&#x7840;&#xFF0C;&#x6240;&#x4EE5;&#x4EAB;&#x5143;&#x6A21;&#x5F0F;&#x4E5F;&#x88AB;&#x5927;&#x91CF;&#x4F7F;&#x7528;&#xFF0C;&#x5C24;&#x5176;&#x5728;&#x63D2;&#x4EF6;&#x5F00;&#x53D1;&#x65F6;&#x3002;</p>
+</blockquote>
+<p>jQuery &#x6210;&#x529F;&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x8FD8;&#x5728;&#x4E8E;&#x5B83;&#x63D0;&#x4F9B;&#x4E86;&#x975E;&#x5E38;&#x597D;&#x7684;&#x63D2;&#x4EF6;&#x4F53;&#x7CFB;&#xFF0C;&#x5F88;&#x591A;&#x5E38;&#x7528;&#x7684;&#x529F;&#x80FD;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x63D2;&#x4EF6;&#x5B9E;&#x73B0;&#xFF0C;&#x590D;&#x7528;&#x6027;&#x975E;&#x5E38;&#x5F3A;&#xFF0C;&#x7528;&#x6CD5;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x3002;&#x6BD4;&#x5982;&#x5728;&#x8457;&#x540D;&#x524D;&#x7AEF;&#x6846;&#x67B6; Bootstrap &#x4E2D;&#xFF0C;&#x5C31;&#x5927;&#x91CF;&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x63D2;&#x4EF6;&#xFF0C;&#x6BD4;&#x5982; <a href="https://getbootstrap.com/docs/4.3/components/modal/#via-javascript" target="_blank">&#x5F39;&#x7A97;&#xFF08;Model&#xFF09;</a>&#xFF1A;</p>
+<pre><code class="lang-js">$(<span class="hljs-string">&apos;#myModal&apos;</span>).modal(options);
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x628A; <code>id</code> &#x4E3A; <code>myModel</code> &#x7684; DOM &#x5B9E;&#x4F8B;&#x5316;&#x6210;&#x4E00;&#x4E2A;&#x5F39;&#x7A97;&#x3002;&#x524D;&#x9762;&#x7684;&#x9009;&#x62E9;&#x5668;&#x53EF;&#x4EE5;&#x662F; <code>id</code>&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F; <code>class</code>&#xFF0C;&#x627E;&#x5230;&#x7684; DOM &#x8282;&#x70B9;&#x90FD;&#x4F1A;&#x88AB;&#x4F5C;&#x4E3A;&#x5F39;&#x7A97;&#x5904;&#x7406;&#x3002;</p>
+<h2 id="&#x4F18;&#x52BF;">&#x4F18;&#x52BF;</h2>
+<p>&#x5728;&#x7F51;&#x9875;&#x91CC;&#xFF0C;&#x5B58;&#x5728;&#x5927;&#x91CF;&#x76F8;&#x4F3C;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x5B83;&#x4EEC;&#x529F;&#x80FD;&#x4E00;&#x81F4;&#xFF0C;&#x7ED3;&#x6784;&#x76F8;&#x4F3C;&#x3002;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x9488;&#x5BF9;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x90FD;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x72EC;&#x7ACB;&#x7684;&#x529F;&#x80FD;&#x5BF9;&#x8C61;&#xFF0C;&#x5C06;&#x6D88;&#x8017;&#x5927;&#x91CF;&#x7684;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;&#x3002;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x628A;&#x76F8;&#x4F3C;&#x7684;&#x8282;&#x70B9;&#x4EA4;&#x7ED9;&#x4E00;&#x4E2A;&#x4EAB;&#x5143;&#x5BF9;&#x8C61;&#x5904;&#x7406;&#xFF0C;&#x5B83;&#x4EEC;&#x7684;&#x5916;&#x90E8;&#x6570;&#x636E;&#x90FD;&#x901A;&#x8FC7;&#x4EAB;&#x5143;&#x5BF9;&#x8C61;&#x5B58;&#x50A8;&#x548C;&#x63D0;&#x53D6;&#x3002;&#x907F;&#x514D;&#x6781;&#x4E3A;&#x7C7B;&#x4F3C;&#x7684;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x591A;&#x4EFD;&#x6D6A;&#x8D39;&#x7A7A;&#x95F4;&#x3002;</p>
+<h2 id="&#x529F;&#x80FD;&#x4ECB;&#x7ECD;">&#x529F;&#x80FD;&#x4ECB;&#x7ECD;</h2>
+<p>&#x4EAB;&#x5143;&#x6A21;&#x5F0F;&#x4E00;&#x822C;&#x6709;&#x4E00;&#x4E2A;&#x4EAB;&#x5143;&#x5BF9;&#x8C61;&#xFF0C;&#x8FD8;&#x6709;&#x82E5;&#x5E72;&#x5143;&#x7D20;&#x5BF9;&#x8C61;&#x3002;&#x5143;&#x7D20;&#x5BF9;&#x8C61;&#x7684;&#x5916;&#x90E8;&#x72B6;&#x6001;&#x5E94;&#x8BE5;&#x662F;&#x4E00;&#x81F4;&#x7684;&#xFF0C;&#x7136;&#x540E;&#x642C;&#x8FD0;&#x5230;&#x4EAB;&#x5143;&#x5BF9;&#x8C61;&#xFF0C;&#x7136;&#x540E;&#x4ECE;&#x5143;&#x7D20;&#x5BF9;&#x8C61;&#x4E2D;&#x5220;&#x9664;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5E94;&#x8BE5;&#x907F;&#x514D;&#x8BBF;&#x95EE;&#x67D0;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x5143;&#x7D20;&#x5BF9;&#x8C61;&#xFF0C;&#x90FD;&#x4EA4;&#x7ED9;&#x4EAB;&#x5143;&#x5BF9;&#x8C61;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x5143;&#x7D20;&#x9700;&#x8981;&#x72EC;&#x7ACB;&#x53D8;&#x5316;&#xFF0C;&#x90A3;&#x4E48;&#x6700;&#x597D;&#x628A;&#x5B83;&#x79FB;&#x51FA;&#x4E4B;&#x524D;&#x7684;&#x4EAB;&#x5143;&#x5BF9;&#x8C61;&#xFF0C;&#x7136;&#x540E;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x4EAB;&#x5143;&#x5BF9;&#x8C61;&#x5E76;&#x653E;&#x5165;&#x3002;</p>
+<h2 id="jquery-&#x5B9E;&#x73B0;">jQuery &#x5B9E;&#x73B0;</h2>
+<p>jQuery &#x91CC;&#x9762;&#x80FD;&#x76F4;&#x63A5;&#x4F53;&#x73B0;&#x4EAB;&#x5143;&#x6A21;&#x5F0F;&#x7684;&#x4EE3;&#x7801;&#x4E0D;&#x592A;&#x591A;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x6458;&#x6284; <a href="https://learn.jquery.com/plugins/basic-plugin-creation/" target="_blank">jQuery &#x6559;&#x5B66;&#xFF1A;&#x5982;&#x4F55;&#x521B;&#x5EFA;&#x63D2;&#x4EF6;&#xFF08;jQuery Learn: How to Create a Basic Plugin&#xFF09;</a> &#x91CC;&#x7684;&#x4E00;&#x6BB5;&#x8303;&#x4F8B;&#x4EE3;&#x7801;&#x3002;jQuery &#x63D2;&#x4EF6;&#x5176;&#x5B9E;&#x5F88;&#x597D;&#x7684;&#x4F53;&#x73B0;&#x4E86;&#x4EAB;&#x5143;&#x6A21;&#x5F0F;&#x7684;&#x6548;&#x679C;&#xFF1A;</p>
+<ol>
+<li>&#x5355;&#x4E00;&#x73AF;&#x5883;&#x4E2D;&#x5927;&#x91CF;&#x4F7F;&#x7528;</li>
+<li>&#x5916;&#x90E8;&#x72B6;&#x6001;&#x975E;&#x5E38;&#x76F8;&#x4F3C;</li>
+<li>&#x65B9;&#x4FBF;&#x6279;&#x91CF;&#x5904;&#x7406;</li>
+</ol>
+<pre><code class="lang-js">(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"> $ </span>) </span>{
+
+  $.fn.greenify = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> options </span>) </span>{
+
+    <span class="hljs-comment">// &#x5904;&#x7406;&#x63D2;&#x4EF6;&#x53C2;&#x6570;&#xFF0C;&#x8FD9;&#x4E9B;&#x53C2;&#x6570;&#xFF0C;&#x65E0;&#x8BBA;&#x5305;&#x542B;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x90FD;&#x53EA;&#x5B58;&#x5728;&#x4E00;&#x4EFD;</span>
+    <span class="hljs-comment">// &#x53EF;&#x4EE5;&#x5728;&#x5143;&#x7D20;&#x95F4;&#x5171;&#x4EAB;&#xFF0C;&#x53EA;&#x5360;&#x7528;&#x4E00;&#x4EFD;&#x7A7A;&#x95F4;</span>
+    <span class="hljs-keyword">var</span> settings = $.extend({
+      color: <span class="hljs-string">&quot;#556b2f&quot;</span>,
+      backgroundColor: <span class="hljs-string">&quot;white&quot;</span>
+    }, options );
+
+    <span class="hljs-comment">// &#x4F7F;&#x7528; `.each` &#x5904;&#x7406;&#x6240;&#x6709;&#x63D2;&#x4EF6;</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">this</span>.css({
+        color: settings.color,
+        backgroundColor: settings.backgroundColor
+      });
+    });
+  };
+
+}( jQuery ));
+</code></pre>
+<h2 id="javascript-&#x548C;&#x7ECF;&#x5178;&#x6A21;&#x5F0F;&#x7684;&#x533A;&#x522B;">JavaScript &#x548C;&#x7ECF;&#x5178;&#x6A21;&#x5F0F;&#x7684;&#x533A;&#x522B;</h2>
+<p>&#x7ECF;&#x5178;&#x6A21;&#x5F0F;&#x91CC;&#xFF0C;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x548C;&#x5783;&#x573E;&#x56DE;&#x6536;&#x90FD;&#x662F;&#x503C;&#x5F97;&#x5173;&#x6CE8;&#x7684;&#x5185;&#x5BB9;&#x3002;&#x4F46;&#x662F;&#x5728; JS &#x91CC;&#xFF0C;&#x8FD9;&#x4E24;&#x65B9;&#x9762;&#x90FD;&#x4E0D;&#x53D7;&#x6211;&#x4EEC;&#x63A7;&#x5236;&#x3002;JS &#x91CC;&#x6240;&#x6709;&#x4E1C;&#x897F;&#x90FD;&#x662F;&#x5BF9;&#x8C61;&#xFF0C;&#x6211;&#x4EEC;&#x5BF9; Web &#x7684;&#x64CD;&#x4F5C;&#x4F1A;&#x7531;&#x6D4F;&#x89C8;&#x5668;&#x6620;&#x5C04;&#x5230;&#x5C4F;&#x5E55;&#x4E0A;&#xFF0C;&#x6240;&#x4EE5;&#x5927;&#x90E8;&#x5206;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x5173;&#x6CE8;&#x7684;&#x662F;&#x6570;&#x636E;&#x7684;&#x5F15;&#x7528;&#x548C;&#x5904;&#x7406;&#x3002;</p>
+<h2 id="&#x9002;&#x7528;&#x6027;">&#x9002;&#x7528;&#x6027;</h2>
+<p>&#x5F53;&#x4F60;&#x9047;&#x5230;&#x7C7B;&#x4F3C;&#x4E0B;&#x9762;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x5E94;&#x8BE5;&#x8003;&#x8651;&#x4F7F;&#x7528;&#x4EAB;&#x5143;&#x6A21;&#x5F0F;&#xFF1A;</p>
+<ol>
+<li>&#x4F7F;&#x7528;&#x5927;&#x91CF;&#x5BF9;&#x8C61;</li>
+<li>&#x5982;&#x679C;&#x5BF9;&#x6BCF;&#x4E2A;&#x5BF9;&#x8C61;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x53EF;&#x80FD;&#x9020;&#x6210;&#x5927;&#x91CF;&#x7684;&#x5185;&#x5B58;&#x6D6A;&#x8D39;</li>
+<li>&#x8FD9;&#x4E9B;&#x5BF9;&#x8C61;&#x5927;&#x90E8;&#x5206;&#x72B6;&#x6001;&#x662F;&#x5916;&#x90E8;&#x72B6;&#x6001;&#xFF0C;&#x6216;&#x8005;&#x8BF4;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5916;&#x90E8;&#x8BBF;&#x95EE;</li>
+<li>&#x8FD9;&#x4E9B;&#x5BF9;&#x8C61;&#x7684;&#x5916;&#x90E8;&#x5BF9;&#x8C61;&#x57FA;&#x672C;&#x90FD;&#x4E00;&#x81F4;&#xFF0C;&#x53EF;&#x4EE5;&#x5171;&#x4EAB;</li>
+<li>&#x5BF9;&#x8C61;&#x672C;&#x8EAB;&#x4E0D;&#x9700;&#x8981;&#x88AB;&#x4E2A;&#x4F53;&#x8BC6;&#x522B;</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="composite-pattern.html" class="navigation navigation-prev " aria-label="Previous page: 组合模式">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="end.html" class="navigation navigation-next " aria-label="Next page: 总结">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"享元模式","level":"1.7","depth":1,"next":{"title":"总结","level":"1.8","depth":1,"path":"end.md","ref":"end.md","articles":[]},"previous":{"title":"组合模式","level":"1.6","depth":1,"path":"composite-pattern.md","ref":"composite-pattern.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"从 jQuery 中学习设计模式","language":"zh","gitbook":"*","description":"jQuery 能取得如此成功，设计模式功不可没。但是，由于 JavaScript 里缺少面向对象的习惯，所以很多同学并不了解。本文就结合 jQuery 里最受欢迎的一些特性，讲解设计模式是如何工作的。"},"file":{"path":"flyweight-pattern.md","mtime":"2019-08-01T02:12:48.318Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2019-08-31T08:54:33.968Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

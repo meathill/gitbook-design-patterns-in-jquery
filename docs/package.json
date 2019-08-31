@@ -5,7 +5,6 @@
   "main": "concat.js",
   "scripts": {
     "build": "node concat.js",
-    "serve": "php -S localhost:8080",
     "gitbook": "gitbook build ./ docs"
   },
   "repository": {

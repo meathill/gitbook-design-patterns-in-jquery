@@ -1,0 +1,5 @@
+{
+  "title": "从 jQuery 中学习设计模式",
+  "description": "jQuery 能取得如此成功，设计模式功不可没。但是，由于 JavaScript 里缺少面向对象的习惯，所以很多同学并不了解。本文就结合 jQuery 里最受欢迎的一些特性，讲解设计模式是如何工作的。",
+  "language": "zh"
+}
