@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/meathill/gitchat-design-patterns-in-jquery#readme",
   "devDependencies": {
-    "marked": "^0.6.2"
+    "marked": "^1.1.1"
   },
   "dependencies": {}
 }
