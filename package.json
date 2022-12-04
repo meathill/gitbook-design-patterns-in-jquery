@@ -1,5 +1,5 @@
 {
-  "name": "gitchat-design-patterns-in-jquery",
+  "name": "gitbook-design-patterns-in-jquery",
   "version": "1.0.0",
   "description": "从 jQuery 里学习设计模式",
   "scripts": {
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meathill/gitchat-design-patterns-in-jquery.git"
+    "url": "git+https://github.com/meathill/gitbook-design-patterns-in-jquery.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/meathill/gitchat-design-patterns-in-jquery/issues"
+    "url": "https://github.com/meathill/gitbook-design-patterns-in-jquery/issues"
   },
-  "homepage": "https://github.com/meathill/gitchat-design-patterns-in-jquery#readme",
+  "homepage": "https://meathill.com/gitbook-design-patterns-in-jquery/",
   "devDependencies": {
     "@vuepress/plugin-google-analytics": "2.0.0-beta.53",
     "@vuepress/plugin-register-components": "2.0.0-beta.53",

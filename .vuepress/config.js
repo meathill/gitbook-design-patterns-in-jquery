@@ -9,7 +9,7 @@ export default defineUserConfig({
   lang: 'zh-CN',
   title: book.title,
   description: book.description,
-  base: '/gitbook-design-pattern-in-jquery/',
+  base: '/gitbook-design-patterns-in-jquery/',
   head: [],
   theme: defaultTheme({
     docsBranch: 'master',
@@ -27,7 +27,7 @@ export default defineUserConfig({
         link: 'https://space.bilibili.com/7409098',
       }
     ],
-    repo: 'meathill/gitbook-design-pattern-in-jquery',
+    repo: 'meathill/gitbook-design-patterns-in-jquery',
     sidebar: [
       {
         'text': '前言',
