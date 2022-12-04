@@ -1,5 +1,8 @@
 # repo
 node_modules
 _book
-
+.vuepress/dist
+.vuepress/.cache
+.vuepress/.temp
 tmp
+.idea

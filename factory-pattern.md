@@ -103,6 +103,8 @@ export default SomeBigClassFactory(arg1, arg2, ...args) {
 }
 ```
 
+<adsense />
+
 实用性
 --------
 

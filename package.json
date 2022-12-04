@@ -2,11 +2,9 @@
   "name": "gitchat-design-patterns-in-jquery",
   "version": "1.0.0",
   "description": "从 jQuery 里学习设计模式",
-  "main": "concat.js",
   "scripts": {
-    "build": "node concat.js",
-    "serve": "php -S localhost:8080",
-    "gitbook": "gitbook build ./ docs"
+    "dev": "vuepress dev",
+    "build": "vuepress build"
   },
   "repository": {
     "type": "git",
@@ -20,6 +18,10 @@
   },
   "homepage": "https://github.com/meathill/gitchat-design-patterns-in-jquery#readme",
   "devDependencies": {
-    "marked": "^4.0.10"
+    "@vuepress/plugin-google-analytics": "2.0.0-beta.53",
+    "@vuepress/plugin-register-components": "2.0.0-beta.53",
+    "@vuepress/theme-default": "2.0.0-beta.53",
+    "vue": "^3.2.45",
+    "vuepress": "2.0.0-beta.53"
   }
 }
