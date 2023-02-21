@@ -1,5 +1,7 @@
-import {defineUserConfig} from 'vuepress';
+import {defineUserConfig, viteBundler} from 'vuepress';
 import {defaultTheme} from '@vuepress/theme-default';
+import TailwindCss from 'tailwindcss';
+import AutoPrefixer from 'autoprefixer';
 import book from '../book.json';
 import {googleAnalyticsPlugin} from "@vuepress/plugin-google-analytics";
 import {resolve} from "path";
@@ -50,7 +52,20 @@ export default defineUserConfig({
     registerComponentsPlugin({
       components: {
         Adsense: resolve(__dirname, './components/adsense.vue'),
+        Tailwind: resolve(__dirname, './components/tailwind.vue'),
       },
     }),
   ],
+  bundler: viteBundler({
+    viteOptions: {
+      css: {
+        postcss: {
+          plugins: [
+            TailwindCss(),
+            AutoPrefixer(),
+          ],
+        },
+      },
+    },
+  }),
 });

@@ -93,3 +93,5 @@ jQuery 前些天陆续发布了 [3.4.0](https://blog.jquery.com/2019/04/10/jquer
 [GitHub issue](https://github.com/meathill/gitchat-design-patterns-in-jquery/issues)。
 
 再次感谢大家。
+
+<Tailwind />
